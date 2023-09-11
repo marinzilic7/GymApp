@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Gym App</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
+      <a class="navbar-brand ms-3" href="/">GymApp</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <div class="dropdown">
+            <button
+              class="btn btn-light dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Teretana
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <button
+                type="button"
+                class="btn btn-light dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                data-bs-whatever="@getbootstrap"
+              >
+                Dodaj clanarinu
+              </button>
+            </ul>
+          </div>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/clan">Član</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/trener">Trener</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/trening">Trening</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    
+
+    <!-- MODAL ZA  DODAVANJE CLANARINE -->
+
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Dodaj clanarinu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/dodaj-clanarinu">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  >Odaberi clana:</label
+                >
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  name="ID_clana"
+                  required
+                >
+                  <option selected>Odaberi clana</option>
+                  {% for clan in clanovi %}
+                  <option value="{{ clan.ID_clana }}">{{ clan.ime }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >Odaberi trenera za clana:</label
+                >
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  name="ID_trenera"
+                  required
+                >
+                  <option selected>Odaberi trenera</option>
+                  {% for trener in treneri %}
+                  <option value="{{ trener.ID_trenera }}">
+                    {{ trener.ime }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >Odaberi trening za clana:</label
+                >
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  name="ID_trening"
+                  required
+                >
+                  <option selected>Odaberi trening</option>
+                  {% for trening in treninzi %}
+                  <option value="{{ trening.ID_trening }}">
+                    {{ trening.ime }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  >Trajanje clanarine:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recipient-name"
+                  name="trajanje"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mt-3">
+                Dodaj clanarinu
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary w-100"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+     
+        <table class="table table-primary shadow-lg">
+          <thead>
+            <tr>
+              <th scope="col">ID clanarine</th>
+              <th scope="col">Clan</th>
+              <th scope="col">Trener clana</th>
+              <th scope="col">Vrsta treninga</th>
+              <th scope="col">Trajanje clanarine</th>
+              <th scope="col">Izbrisi</th>
+              <th scope="col">Uredi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for clanarina in clanarine %}
+            <tr>
+              <th scope="row">{{clanarina.ID_Clanarina}}</th>
+              <td>
+                {% for clan in clanovi %} {% if clan.ID_clana ==
+                clanarina.ID_clana %} {{ clan.ime }} {% endif %} {% endfor %}
+              </td>
+
+              <td>
+                {% for trener in treneri %} {% if trener.ID_trenera ==
+                clanarina.ID_trenera %} {{ trener.ime }} {% endif %} {% endfor
+                %}
+              </td>
+              >
+              <td>
+                {% for trening in treninzi %} {% if trening.ID_trening ==
+                clanarina.ID_trening %} {{ trening.vrsta }} {% endif %} {%
+                endfor %}
+              </td>
+              >
+              <td>{{clanarina.trajanje}}</td>
+              >
+              <td scope="row">
+                <form
+                  action="{{ url_for('izbrisi_clanarinu', ID_Clanarina=clanarina.ID_Clanarina) }}"
+                  method="POST"
+                >
+                  <input type="hidden" name="ID_clanarina" />
+                  <button type="submit" class="btn btn-outline-danger btn-sm">
+                    Izbrisi
+                  </button>
+                </form>
+              </td>
+              <td>
+                <form
+                  action="{{ url_for('uredi_clanarinu', ID_Clanarina=clanarina.ID_Clanarina) }}"
+                >
+                  <input type="hidden" name="ID_clanarina" />
+                  <button type="submit" class="btn btn-outline-warning btn-sm">
+                    Uredi
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
