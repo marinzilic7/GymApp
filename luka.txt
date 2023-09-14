@@ -1,0 +1,42 @@
+CREATE TABLE clanovi (
+    ID_clana INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(50),
+    prezime VARCHAR(50),
+    kontakt VARCHAR(20)
+);
+
+CREATE TABLE teretana (
+    ID_teretane INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(50),
+    adresa VARCHAR(50),
+    kontakt INT
+);
+
+
+CREATE TABLE treneri (
+    ID_trenera INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(50),
+    prezime VARCHAR(50),
+    kontakt VARCHAR(20)
+);
+
+
+CREATE TABLE trening (
+    ID_trening INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(50),
+    vrsta VARCHAR(50)
+);
+
+
+sql
+
+CREATE TABLE clanarina (
+    ID_Clanarina INT AUTO_INCREMENT PRIMARY KEY,
+    ID_clana INT,
+    ID_trenera INT,
+    ID_trening INT,
+    trajanje VARCHAR(50),
+    FOREIGN KEY (ID_clana) REFERENCES clanovi(ID_clana) ON DELETE CASCADE,
+    FOREIGN KEY (ID_trenera) REFERENCES treneri(ID_trenera) ON DELETE CASCADE,
+    FOREIGN KEY (ID_trening) REFERENCES trening(ID_trening) ON DELETE CASCADE
+);
