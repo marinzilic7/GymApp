@@ -199,15 +199,15 @@
                 clanarina.ID_trenera %} {{ trener.ime }} {% endif %} {% endfor
                 %}
               </td>
-              >
+              
               <td>
                 {% for trening in treninzi %} {% if trening.ID_trening ==
                 clanarina.ID_trening %} {{ trening.vrsta }} {% endif %} {%
                 endfor %}
               </td>
-              >
+              
               <td>{{clanarina.trajanje}}</td>
-              >
+              
               <td scope="row">
                 <form
                   action="{{ url_for('izbrisi_clanarinu', ID_Clanarina=clanarina.ID_Clanarina) }}"
